@@ -1,0 +1,191 @@
+:host {
+  display: block;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #0f1420;
+  color: #e6e9f0;
+  min-height: 100vh;
+}
+
+.layout {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+}
+
+.hero h1 {
+  margin: 0 0 0.35rem;
+  font-size: 1.6rem;
+}
+
+.sub {
+  margin: 0 0 1.5rem;
+  color: #9aa3b5;
+  line-height: 1.5;
+}
+
+.card {
+  background: #171e2e;
+  border: 1px solid #263048;
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+h2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 1rem;
+  font-size: 1.05rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem 1rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  color: #b9c1d2;
+  gap: 0.35rem;
+}
+
+input,
+button {
+  font: inherit;
+}
+
+input {
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
+  border: 1px solid #33405e;
+  background: #0f1420;
+  color: #e6e9f0;
+}
+
+input:focus {
+  outline: 2px solid #4c7dff;
+  border-color: #4c7dff;
+}
+
+button {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background: #4c7dff;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: end;
+}
+
+button:hover {
+  background: #6390ff;
+}
+
+button:disabled {
+  background: #3a4a6e;
+  cursor: not-allowed;
+}
+
+button.ghost {
+  background: transparent;
+  border: 1px solid #33405e;
+  font-weight: 500;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+button.ghost:hover {
+  border-color: #4c7dff;
+  background: #0f1420;
+}
+
+.error {
+  background: #3a1620;
+  border: 1px solid #a03a4d;
+  color: #ffb3bf;
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  margin: 0 0 0.8rem;
+}
+
+.muted {
+  color: #9aa3b5;
+  margin: 0.4rem 0;
+}
+
+.mono,
+code {
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+
+.result {
+  border: 1px solid #33405e;
+  border-radius: 8px;
+  padding: 0.9rem 1.1rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.badge.authorized {
+  background: #12301f;
+  color: #5ee08a;
+}
+
+.badge.rejected {
+  background: #3a1620;
+  color: #ff8ba0;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.3rem 1rem;
+  margin: 0.8rem 0 0;
+}
+
+dt {
+  color: #9aa3b5;
+}
+
+dd {
+  margin: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid #263048;
+  vertical-align: top;
+}
+
+th {
+  color: #9aa3b5;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+footer {
+  margin-top: 1rem;
+  text-align: center;
+}

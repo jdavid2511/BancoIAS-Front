@@ -1,0 +1,104 @@
+<main class="layout">
+  <header class="hero">
+    <h1>BancoIAS &middot; Transferencias</h1>
+    <p class="sub">
+      Solicitar una transferencia (RF01), aplicando reglas de negocio (RF02/RF03),
+      concurrencia segura (RF04) e idempotencia por <code>requestReference</code> (RF05).
+    </p>
+  </header>
+
+  <section class="card">
+    <h2>Nueva transferencia</h2>
+    <form [formGroup]="form" (ngSubmit)="createTransfer()" class="grid" novalidate>
+      <label>
+        Referencia de petición (única)
+        <input formControlName="requestReference" placeholder="pago-nomina-0001" />
+      </label>
+      <label>
+        Cuenta origen
+        <input formControlName="sourceAccountId" placeholder="CTA-1001" />
+      </label>
+      <label>
+        Cuenta destino
+        <input formControlName="destinationAccountId" placeholder="CTA-2001" />
+      </label>
+      <label>
+        Monto (COP)
+        <input formControlName="amount" type="number" min="1" placeholder="150000" />
+      </label>
+      <button type="submit" [disabled]="submitting()">
+        {{ submitting() ? 'Procesando…' : 'Solicitar transferencia' }}
+      </button>
+    </form>
+  </section>
+
+  <section class="card">
+    <h2>
+      Resultado
+      <button type="button" class="ghost" (click)="lookupByReference(form.controls.requestReference.value)">
+        Consultar por referencia
+      </button>
+    </h2>
+
+    @if (errorMessage()) {
+      <p class="error">{{ errorMessage() }}</p>
+    }
+
+    @if (lastResult(); as result) {
+      <div class="result" [attr.data-status]="result.status">
+        <span class="badge" [class.authorized]="result.status === 'AUTHORIZED'"
+          [class.rejected]="result.status === 'REJECTED'">{{ result.status }}</span>
+        <dl>
+          <dt>Referencia</dt><dd>{{ result.requestReference }}</dd>
+          <dt>Origen → Destino</dt><dd>{{ result.sourceAccountId }} → {{ result.destinationAccountId }}</dd>
+          <dt>Monto</dt><dd>{{ formatAmount(result.amount) }}</dd>
+          <dt>Procesado</dt><dd class="mono">{{ result.processedAt }}</dd>
+          @if (result.reason) {
+            <dt>Motivo de rechazo</dt><dd class="mono">{{ result.reason }}</dd>
+          }
+        </dl>
+      </div>
+    } @else if (!errorMessage()) {
+      <p class="muted">Aún no hay transferencias en esta sesión.</p>
+    }
+  </section>
+
+  <section class="card">
+    <h2>Últimas transferencias</h2>
+    @if (loadingHistory()) {
+      <p class="muted">Cargando…</p>
+    } @else if (history().length === 0) {
+      <p class="muted">No hay transferencias registradas.</p>
+    } @else {
+      <table>
+        <thead>
+          <tr>
+            <th>Referencia</th>
+            <th>Origen</th>
+            <th>Destino</th>
+            <th>Monto</th>
+            <th>Estado</th>
+            <th>Motivo</th>
+            <th>Procesado</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (t of history(); track t.requestReference) {
+            <tr>
+              <td class="mono">{{ t.requestReference }}</td>
+              <td>{{ t.sourceAccountId }}</td>
+              <td>{{ t.destinationAccountId }}</td>
+              <td>{{ formatAmount(t.amount) }}</td>
+              <td>
+                <span class="badge" [class.authorized]="t.status === 'AUTHORIZED'"
+                  [class.rejected]="t.status === 'REJECTED'">{{ t.status }}</span>
+              </td>
+              <td class="mono">{{ t.reason ?? '—' }}</td>
+              <td class="mono">{{ t.processedAt }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </section>
+</main>
