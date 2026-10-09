@@ -1,0 +1,27 @@
+<p class="intro">Ingrese la referencia de la petición para ver su estado.</p>
+
+<form (submit)="submit($event)" novalidate autocomplete="off">
+  <app-form-field label="Referencia de petición">
+    <input
+      #referenceInput
+      appFieldControl
+      type="text"
+      [formControl]="reference"
+      placeholder="pago-nomina-0001"
+      [attr.maxlength]="referenceMaxLength"
+    />
+  </app-form-field>
+
+  <div class="actions">
+    <button type="button" class="ghost" (click)="cancelled.emit()">Cancelar</button>
+    <button type="submit" [disabled]="searching()">
+      {{ searching() ? 'Consultando…' : 'Consultar' }}
+    </button>
+  </div>
+</form>
+
+@if (searching()) {
+  <p class="muted" role="status">Consultando…</p>
+} @else if (errorMessage() || transfer()) {
+  <app-transfer-result [transfer]="transfer()" [errorMessage]="errorMessage()" />
+}

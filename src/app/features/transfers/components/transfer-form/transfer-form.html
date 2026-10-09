@@ -1,0 +1,58 @@
+<form
+  class="grid"
+  [formGroup]="form()"
+  (ngSubmit)="submit()"
+  [attr.aria-busy]="submitting()"
+  novalidate
+  autocomplete="off"
+>
+  <fieldset class="fields" [disabled]="submitting()">
+    <app-form-field label="Referencia de petición (única)">
+      <input
+        appFieldControl
+        formControlName="requestReference"
+        type="text"
+        placeholder="pago-nomina-0001"
+        [attr.maxlength]="referenceMaxLength"
+      />
+    </app-form-field>
+
+    <app-form-field label="Cuenta origen">
+      <input
+        appFieldControl
+        formControlName="sourceAccountId"
+        type="text"
+        placeholder="CTA-1001"
+        [attr.maxlength]="accountMaxLength"
+      />
+    </app-form-field>
+
+    <app-form-field label="Cuenta destino">
+      <input
+        appFieldControl
+        formControlName="destinationAccountId"
+        type="text"
+        placeholder="CTA-2001"
+        [attr.maxlength]="accountMaxLength"
+      />
+    </app-form-field>
+
+    <app-form-field label="Monto (COP)">
+      <input
+        appFieldControl
+        formControlName="amount"
+        type="number"
+        [attr.min]="minAmount"
+        placeholder="150000"
+      />
+    </app-form-field>
+  </fieldset>
+
+  @if (sameAccountMessage(); as message) {
+    <p class="field-error span-2">{{ message }}</p>
+  }
+
+  <button type="submit" [disabled]="submitting()">
+    {{ submitting() ? 'Procesando…' : 'Solicitar transferencia' }}
+  </button>
+</form>

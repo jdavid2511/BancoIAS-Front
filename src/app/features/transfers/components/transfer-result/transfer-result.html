@@ -1,0 +1,25 @@
+@if (errorMessage()) {
+  <p class="error" role="alert">{{ errorMessage() }}</p>
+}
+
+@if (transfer(); as current) {
+  <div class="result" [attr.data-status]="current.status">
+    <app-status-badge [status]="current.status" />
+    <dl>
+      <dt>Referencia</dt>
+      <dd>{{ current.requestReference }}</dd>
+      <dt>Origen → Destino</dt>
+      <dd>{{ current.sourceAccountId }} → {{ current.destinationAccountId }}</dd>
+      <dt>Monto</dt>
+      <dd>{{ current.amount | copCurrency }}</dd>
+      <dt>Procesado</dt>
+      <dd>{{ current.processedAt | processedAt }}</dd>
+      @if (current.reason) {
+        <dt>Motivo de rechazo</dt>
+        <dd [attr.title]="current.reason">{{ current.reason | rejectionReason }}</dd>
+      }
+    </dl>
+  </div>
+} @else if (!errorMessage()) {
+  <p class="muted">Aún no hay un resultado en esta sesión.</p>
+}

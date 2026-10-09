@@ -1,0 +1,36 @@
+:host {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--text);
+  padding: 1.25rem 1.5rem;
+  width: min(32rem, calc(100vw - 2rem));
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+}
+
+:host::backdrop {
+  background: rgb(8 10 16 / 72%);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.close {
+  padding: 0.15rem 0.55rem;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.body {
+  margin-top: 0.75rem;
+}

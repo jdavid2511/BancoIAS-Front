@@ -1,0 +1,6 @@
+export type RejectionReason =
+  | 'AMOUNT_NOT_POSITIVE'
+  | 'SAME_ACCOUNT'
+  | 'ACCOUNT_NOT_FOUND'
+  | 'SOURCE_ACCOUNT_BLOCKED'
+  | 'INSUFFICIENT_BALANCE';

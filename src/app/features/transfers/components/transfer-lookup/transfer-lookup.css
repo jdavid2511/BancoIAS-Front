@@ -1,0 +1,17 @@
+.intro {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+app-transfer-result {
+  display: block;
+  margin-top: 1rem;
+}

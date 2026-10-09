@@ -1,0 +1,5 @@
+<label>
+  {{ label() }}
+  <ng-content />
+  <span class="error-message" [id]="errorId()">{{ message() }}</span>
+</label>

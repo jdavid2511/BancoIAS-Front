@@ -1,0 +1,8 @@
+<header class="header">
+  <h2 [id]="titleId">{{ title() }}</h2>
+  <button type="button" class="ghost close" (click)="requestClose()" aria-label="Cerrar">×</button>
+</header>
+
+<div class="body">
+  <ng-content />
+</div>

@@ -1,0 +1,47 @@
+@if (loading()) {
+  <p class="muted" role="status">Cargando…</p>
+} @else if (errorMessage() && transfers().length === 0) {
+  <p class="error" role="alert">{{ errorMessage() }}</p>
+} @else if (transfers().length === 0) {
+  <p class="muted">No hay transferencias registradas.</p>
+} @else {
+  @if (errorMessage()) {
+    <p class="error" role="alert">{{ errorMessage() }}</p>
+  }
+  <p class="hint">Seleccione una fila para ver el detalle.</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Referencia</th>
+          <th>Origen</th>
+          <th>Destino</th>
+          <th>Monto</th>
+          <th>Estado</th>
+          <th>Motivo</th>
+          <th>Procesado</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (transfer of transfers(); track transfer.requestReference) {
+          <tr
+            tabindex="0"
+            (click)="selectTransfer(transfer)"
+            (keydown.enter)="selectTransfer(transfer)"
+            (keydown.space)="$event.preventDefault(); selectTransfer(transfer)"
+          >
+            <td class="mono">{{ transfer.requestReference }}</td>
+            <td>{{ transfer.sourceAccountId }}</td>
+            <td>{{ transfer.destinationAccountId }}</td>
+            <td>{{ transfer.amount | copCurrency }}</td>
+            <td>
+              <app-status-badge [status]="transfer.status" />
+            </td>
+            <td [attr.title]="transfer.reason">{{ transfer.reason | rejectionReason }}</td>
+            <td>{{ transfer.processedAt | processedAt }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

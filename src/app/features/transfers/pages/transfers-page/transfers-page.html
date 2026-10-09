@@ -1,0 +1,60 @@
+<main class="layout">
+  <header class="hero">
+    <h1>BancoIAS · Transferencias</h1>
+    <p class="sub">
+      Envíe dinero entre cuentas, consulte una transferencia por su referencia y revise las más
+      recientes.
+    </p>
+  </header>
+
+  <section class="card">
+    <h2>Nueva transferencia</h2>
+    <app-transfer-form
+      [form]="form"
+      [submitting]="transfers.submitting()"
+      (transferSubmitted)="createTransfer()"
+    />
+  </section>
+
+  <section id="transfer-result" class="card" [attr.aria-busy]="transfers.submitting()">
+    <h2>
+      Resultado
+      <button type="button" class="ghost" (click)="transfers.openLookup()">
+        Consultar por referencia
+      </button>
+    </h2>
+    <app-transfer-result
+      [transfer]="transfers.lastResult()"
+      [errorMessage]="transfers.requestError()"
+    />
+  </section>
+
+  <section class="card" [attr.aria-busy]="transfers.loadingHistory()">
+    <h2>Últimas transferencias</h2>
+    <app-transfer-history
+      [transfers]="transfers.history()"
+      [loading]="transfers.loadingHistory()"
+      [errorMessage]="transfers.historyError()"
+      (transferSelected)="showTransfer($event)"
+    />
+  </section>
+
+  <dialog
+    appModal
+    title="Consultar transferencia"
+    [visible]="transfers.lookupOpen()"
+    (closed)="transfers.closeLookup()"
+  >
+    @if (transfers.lookupOpen()) {
+      <app-transfer-lookup
+        [searching]="transfers.lookingUp()"
+        [transfer]="transfers.lookupResult()"
+        [errorMessage]="transfers.lookupError()"
+        (cancelled)="transfers.closeLookup()"
+        (referenceSubmitted)="transfers.lookupByReference($event)"
+      />
+    }
+  </dialog>
+
+  <footer class="muted">Los montos se procesan en pesos colombianos (COP).</footer>
+</main>
